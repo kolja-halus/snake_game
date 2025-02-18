@@ -201,25 +201,25 @@ hint_message_rect = hint_message_surface.get_rect(
 
 def create_direction_hint(dirrection):
     if dirrection == "up":
-        img = "arrow_up.png"
+        img = "img/arrow_up.png"
         arrow_size = (20, 60)
         x, y = game_surface_local_center[0], game_surface_local_center[1] - 60
         letter = "W"
         letter_x, letter_y = x, y - 50
     elif dirrection == "down":
-        img = "arrow_down.png"
+        img = "img/arrow_down.png"
         arrow_size = (20, 60)
         x, y = game_surface_local_center[0], game_surface_local_center[1] + 60
         letter = "S"
         letter_x, letter_y = x, y + 50
     elif dirrection == "left":
-        img = "arrow_left.png"
+        img = "img/arrow_left.png"
         arrow_size = (60, 20)
         x, y = game_surface_local_center[0] - 60, game_surface_local_center[1]
         letter = "A"
         letter_x, letter_y = x - 50, y
     elif dirrection == "right":
-        img = "arrow_right.png"
+        img = "img/arrow_right.png"
         arrow_size = (60, 20)
         x, y = game_surface_local_center[0] + 60, game_surface_local_center[1]
         letter = "D"
