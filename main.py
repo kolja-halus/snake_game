@@ -13,16 +13,14 @@ YELLOW = (255, 255, 0)
 RED = (255, 0, 0)
 PURPLE = (128, 0, 128)
 SILVER = (240, 240, 240)
-SILVER_ALPHA = (0, 0, 0)
-
 
 # Ширина та висота клієнтської області
-display_width = 620
-display_height = 720
+SCREEN_WIDTH = 620
+SCREEN_HEIGHT = 720
 
 # Створюємо і зберігаємо в змінній 'screen' вікно гри з розмірами
 # display_width x display_height
-screen = pygame.display.set_mode((display_width, display_height))
+screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 # Встановлюємо заголовок вікна гри на "Snake game"
 pygame.display.set_caption("Snake game")
 
@@ -39,17 +37,15 @@ clock = pygame.time.Clock()
 block_size = 20
 
 # Поверхня для відображення прогресу
-score_surface = pygame.Surface((display_width, 100))
+score_surface = pygame.Surface((SCREEN_WIDTH, 100))
 score_surface.fill(BLACK)
 
 # Поверхня для руху змійки
-game_surface = pygame.Surface((display_width, display_height - 100))
+game_surface = pygame.Surface((SCREEN_WIDTH, SCREEN_HEIGHT - 100))
 game_surface.fill(WHITE)
 
-game_rect = game_surface.get_rect(
-    topleft=(0, score_surface.get_height())
-)
-game_surface_local_center = (display_width // 2, game_rect.centery - 100)
+game_rect = game_surface.get_rect(topleft=(0, score_surface.get_height()))
+game_surface_local_center = (SCREEN_WIDTH // 2, game_rect.centery - 100)
 
 # Поверхня для сегмента змійки
 segment = pygame.Surface((block_size, block_size))
@@ -68,8 +64,8 @@ food_rect = food.get_rect()
 
 # Генерує випадкові координати для їжі
 def randomize_food_position():
-    food_rect.x = random.randrange(0, display_width, 20)
-    food_rect.y = random.randrange(0, display_width, 20)
+    food_rect.x = random.randrange(0, SCREEN_WIDTH, 20)
+    food_rect.y = random.randrange(0, SCREEN_WIDTH, 20)
 
 
 randomize_food_position()
@@ -89,7 +85,7 @@ def get_score_surface():
         f"Score: {points}", 1, WHITE
     )
     score_text_rect = score_text_surface.get_rect(
-        center=(display_width // 2, 100 // 2)
+        center=(SCREEN_WIDTH // 2, 100 // 2)
     )
     return score_text_surface, score_text_rect
 
@@ -101,7 +97,7 @@ def show_game_over_screen():
     game_over_surface = pygame.Surface((400, 300))
     game_over_surface.fill(BLACK)
     game_over_rect = game_over_surface.get_rect(
-        center=(display_width // 2, 260)
+        center=(SCREEN_WIDTH // 2, 260)
     )
 
     button_exit_surface = pygame.Surface((120, 40))
@@ -168,10 +164,11 @@ def show_game_over_screen():
 
 
 def restart_game():
-    global direction, segment_rect, snake_list, points, frame, new_x, new_y, show_start_hints
+    global direction, segment_rect, snake_list, points, frame, new_x, new_y, \
+        show_start_hints
     show_start_hints = True
     direction = ""
-    segment_rect = segment.get_rect(center=(display_width // 2, 620 // 2))
+    segment_rect = segment.get_rect(center=(SCREEN_WIDTH // 2, 620 // 2))
     new_x, new_y = segment_rect.topleft
     snake_list = [segment_rect]
     points = 0
@@ -200,6 +197,11 @@ hint_message_rect = hint_message_surface.get_rect(
 
 
 def create_direction_hint(dirrection):
+    img = ""
+    arrow_size = (0, 0)
+    x, y = 0, 0
+    letter = ""
+    letter_x, letter_y = 0, 0
     if dirrection == "up":
         img = "img/arrow_up.png"
         arrow_size = (20, 60)
@@ -265,7 +267,6 @@ def start_hints():
             flag = False
             game_surface.blit(food, food_rect)
 
-
     game_surface.blit(*up[0])
     game_surface.blit(*down[0])
     game_surface.blit(*left[0])
@@ -319,7 +320,7 @@ while running:
         elif direction == "right":
             new_x += block_size
 
-        new_x %= display_width
+        new_x %= SCREEN_WIDTH
         new_y %= 620
 
         game_surface.blit(food, food_rect)
@@ -358,4 +359,3 @@ while running:
     clock.tick(FPS)
 
 pygame.quit()
-
